@@ -9,7 +9,7 @@ module.exports = {
          },
          mett_id: {
             type: Sequelize.INTEGER,
-            references: { model: 'mettups', key: 'id' },
+            references: { model: 'mettup', key: 'id' },
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE',
             allowNull: false,
