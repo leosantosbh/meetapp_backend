@@ -9,7 +9,7 @@ class Banner extends Model {
             url: {
                type: Sequelize.VIRTUAL,
                get() {
-                  return `http://localhost:3333/banners/${this.path}`;
+                  return `${process.env.APP_URL}/banners/${this.path}`;
                },
             },
          },
