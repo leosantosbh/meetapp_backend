@@ -7,8 +7,8 @@ import Banner from '../models/Banner';
 import Agend from '../models/Agend';
 import Notification from '../schemas/Notification';
 
-import NotificationMail from '../jobs/NotificationMail';
-import Queue from '../../lib/Queue';
+// import NotificationMail from '../jobs/NotificationMail';
+// import Queue from '../../lib/Queue';
 
 class AgendController {
    async index(req, res) {
@@ -109,10 +109,10 @@ class AgendController {
          mett_id: mettup.id,
       });
 
-      await Queue.add(NotificationMail.key, {
-         mettup,
-         user,
-      });
+      // await Queue.add(NotificationMail.key, {
+      //   mettup,
+      //   user,
+      // });
 
       // desestruturar para pegar alguns campos de req.fil
       return res.json(subscribe);
