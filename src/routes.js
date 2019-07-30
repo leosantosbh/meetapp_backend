@@ -8,6 +8,7 @@ import FileController from './app/controllers/FileController';
 import BannerController from './app/controllers/BannerController';
 import MettController from './app/controllers/MettController';
 import AgendController from './app/controllers/AgendController';
+import MyMeetsController from './app/controllers/MyMeetsController';
 import NotificationController from './app/controllers/NotificationController';
 
 import authMid from './app/middlewares/auth';
@@ -28,6 +29,7 @@ routes.get('/metts', MettController.index);
 routes.delete('/metts/:id', MettController.delete);
 routes.put('/metts/:id', MettController.update);
 
+routes.get('/mymeets', MyMeetsController.index);
 routes.get('/agends', AgendController.index);
 routes.post('/agends/:id/subscribe', AgendController.store);
 

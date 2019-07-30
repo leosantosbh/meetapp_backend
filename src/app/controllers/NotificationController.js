@@ -8,7 +8,7 @@ class NotificationController {
       });
 
       if (!checkIsNotify) {
-         return res.status(400).json({ error: 'Não possui notificações' });
+         return res.status(400).json({ error: 'Não possui Meetaps' });
       }
 
       const notifications = await Notification.find({

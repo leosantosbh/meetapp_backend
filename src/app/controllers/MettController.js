@@ -17,12 +17,12 @@ class MettControle {
             include: [
                {
                   model: Banner,
-                  as: 'banner',
+                  as: 'banners',
                   attributes: ['id', 'path', 'url'],
                },
                {
                   model: User,
-                  as: 'user',
+                  as: 'users',
                   attributes: ['id', 'name', 'email'],
                   include: [
                      { model: File, as: 'avatar', attributes: ['path', 'url'] },
@@ -35,20 +35,19 @@ class MettControle {
       }
 
       const mettups = await Mettup.findAll({
-         where: { user_id: req.userId },
          order: ['date'],
          attributes: ['id', 'titulo', 'descricao', 'local', 'date'],
-         limit: 5,
-         offset: (page - 1) * 5,
+         limit: 10,
+         offset: (page - 1) * 10,
          include: [
             {
                model: Banner,
-               as: 'banner',
+               as: 'banners',
                attributes: ['id', 'path', 'url'],
             },
             {
                model: User,
-               as: 'user',
+               as: 'users',
                attributes: ['id', 'name', 'email'],
                include: [
                   { model: File, as: 'avatar', attributes: ['path', 'url'] },
