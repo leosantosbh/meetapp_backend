@@ -42,12 +42,12 @@ class MettControle {
          include: [
             {
                model: Banner,
-               as: 'banners',
+               as: 'banner',
                attributes: ['id', 'path', 'url'],
             },
             {
                model: User,
-               as: 'users',
+               as: 'user',
                attributes: ['id', 'name', 'email'],
                include: [
                   { model: File, as: 'avatar', attributes: ['path', 'url'] },

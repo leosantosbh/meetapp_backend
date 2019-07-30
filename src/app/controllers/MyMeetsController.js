@@ -7,19 +7,20 @@ class MyMeetsController {
    async index(req, res) {
       const { page = 1 } = req.query;
       const mettups = await Mettup.findAll({
+         where: { user_id: req.userId },
          order: ['date'],
          attributes: ['id', 'titulo', 'descricao', 'local', 'date'],
          limit: 5,
-         offset: (page - 1) * 5,
+         offset: (page - 1) * 10,
          include: [
             {
                model: Banner,
-               as: 'banners',
+               as: 'banner',
                attributes: ['id', 'path', 'url'],
             },
             {
                model: User,
-               as: 'users',
+               as: 'user',
                attributes: ['id', 'name', 'email'],
                include: [
                   { model: File, as: 'avatar', attributes: ['path', 'url'] },
