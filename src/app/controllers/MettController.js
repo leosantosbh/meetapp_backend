@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
-import { parseISO, isBefore } from 'date-fns';
+import { parseISO, isBefore, startOfDay, endOfDay } from 'date-fns';
+import { Op } from 'sequelize';
 import Mettup from '../models/Mett';
 import File from '../models/File';
 import Banner from '../models/Banner';
@@ -7,7 +8,40 @@ import User from '../models/User';
 
 class MettControle {
    async index(req, res) {
-      const { page = 1, meet } = req.query;
+      const { page = 1, meet, data } = req.query;
+      if (data) {
+         const mettups = await Mettup.findAll({
+            where: {
+               date: {
+                  [Op.between]: [
+                     startOfDay(Number(data)),
+                     endOfDay(Number(data)),
+                  ],
+               },
+            },
+            order: ['date'],
+            attributes: ['id', 'titulo', 'descricao', 'local', 'date'],
+            limit: 5,
+            offset: (page - 1) * 5,
+            include: [
+               {
+                  model: Banner,
+                  as: 'banner',
+                  attributes: ['id', 'path', 'url'],
+               },
+               {
+                  model: User,
+                  as: 'user',
+                  attributes: ['id', 'name', 'email'],
+                  include: [
+                     { model: File, as: 'avatar', attributes: ['path', 'url'] },
+                  ],
+               },
+            ],
+         });
+
+         return res.json(mettups);
+      }
       if (meet) {
          const mettups = await Mettup.findByPk(meet, {
             order: ['date'],
