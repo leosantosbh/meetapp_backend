@@ -30,7 +30,9 @@ routes.delete('/metts/:id', MettController.delete);
 routes.put('/metts/:id', MettController.update);
 
 routes.get('/mymeets', MyMeetsController.index);
+
 routes.get('/agends', AgendController.index);
+routes.delete('/agends/:id', AgendController.delete);
 routes.post('/agends/:id/subscribe', AgendController.store);
 
 routes.get('/notifications', NotificationController.index);

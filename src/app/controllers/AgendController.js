@@ -1,4 +1,3 @@
-import { Op } from 'sequelize';
 import { isBefore } from 'date-fns';
 import User from '../models/User';
 import Mettup from '../models/Mett';
@@ -12,21 +11,12 @@ import Notification from '../schemas/Notification';
 
 class AgendController {
    async index(req, res) {
-      const { page = 1 } = req.query;
-
       const agend = await Agend.findAll({
          where: { user_id: req.userId },
-         limit: 5,
-         offset: (page - 1) * 5,
          include: [
             {
                model: Mettup,
                as: 'mett',
-               where: {
-                  date: {
-                     [Op.gt]: new Date(),
-                  },
-               },
                attributes: ['titulo', 'descricao', 'local', 'date'],
                include: [
                   {
@@ -116,6 +106,14 @@ class AgendController {
 
       // desestruturar para pegar alguns campos de req.fil
       return res.json(subscribe);
+   }
+
+   async delete(req, res) {
+      const agend = await Agend.findByPk(req.params.id);
+
+      await agend.destroy();
+
+      return res.send();
    }
 }
 
