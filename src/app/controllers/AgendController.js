@@ -109,6 +109,21 @@ class AgendController {
    }
 
    async delete(req, res) {
+      const check = await Agend.findByPk(req.params.id, {
+         attributes: ['mett_id', 'user_id'],
+         include: [
+            {
+               model: Mettup,
+               as: 'mett',
+               attributes: ['id', 'date'],
+            },
+         ],
+      });
+
+      if (isBefore(check.mett.date, new Date())) {
+         return res.status(400).json({ error: 'Evento já ocorreu' });
+      }
+
       const agend = await Agend.findByPk(req.params.id);
 
       await agend.destroy();
